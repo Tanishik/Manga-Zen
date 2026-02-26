@@ -7,10 +7,13 @@ Note!
 This project is built for educational purposes. Due to API licensing and content restrictions, it is not intended for production release.
 
 
+________
 
 
 
- Features
+
+
+Features
 
 Onboarding experience with manga cover collage
 
@@ -34,6 +37,8 @@ Persistent local storage using Hive
 
 Responsive layout (Portrait & Landscape support)
 
+__________
+
 
 
 
@@ -53,6 +58,8 @@ Stateful & reactive UI patterns
 Custom scroll & reader logic
 
 Modular architecture
+
+____________
 
 
 
