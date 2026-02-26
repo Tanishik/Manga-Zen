@@ -1,16 +1,77 @@
 # manga_zen
 
-A new Flutter project.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+Note!
 
-A few resources to get you started if this is your first Flutter project:
+This project is built for educational purposes. Due to API licensing and content restrictions, it is not intended for production release.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+
+ Features
+
+Onboarding experience with manga cover collage
+
+Personalized setup (choose favorite manga from Top 50)
+
+Library management system
+
+Reading history tracking (with clear option)
+
+Add/remove manga from favorites
+
+Chapter progress tracking (auto-grey completed chapters)
+
+Seamless chapter-to-chapter reading (infinite-like flow)
+
+Vertical & Horizontal reading modes
+
+Discover & search functionality
+
+Persistent local storage using Hive
+
+Responsive layout (Portrait & Landscape support)
+
+
+
+
+
+Tech Stack
+
+Flutter
+
+Dart
+
+REST API integration
+
+Hive (local persistence)
+
+Stateful & reactive UI patterns
+
+Custom scroll & reader logic
+
+Modular architecture
+
+
+
+
+
+What I Learned
+
+Handling large-scale content rendering
+
+Managing async API flows without blocking UI
+
+Debugging using lifecycle tracing (initState, build cycles, etc.)
+
+Designing adaptive UI for multiple orientations
+
+Structuring scalable Flutter apps
+
+
+
+
+
+
