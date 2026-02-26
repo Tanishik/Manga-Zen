@@ -11,15 +11,13 @@ class ReaderItem {
   final bool isBreak;
 
   ReaderItem.page(this.imagePath)
-      : currentTitle = null,
-        nextTitle = null,
-        isBreak = false;
+    : currentTitle = null,
+      nextTitle = null,
+      isBreak = false;
 
-  ReaderItem.breakScreen({
-    required this.currentTitle,
-    required this.nextTitle,
-  })  : imagePath = null,
-        isBreak = true;
+  ReaderItem.breakScreen({required this.currentTitle, required this.nextTitle})
+    : imagePath = null,
+      isBreak = true;
 }
 
 class ReaderPage extends StatefulWidget {
@@ -52,8 +50,9 @@ class _ReaderPageState extends State<ReaderPage> {
   @override
   void initState() {
     super.initState();
-    currentChapterIndex =
-        widget.chapterList.indexWhere((c) => c.id == widget.chapter.id);
+    currentChapterIndex = widget.chapterList.indexWhere(
+      (c) => c.id == widget.chapter.id,
+    );
     _pageController = PageController(initialPage: 0);
     _initReader();
   }
@@ -66,10 +65,9 @@ class _ReaderPageState extends State<ReaderPage> {
   }
 
   Future<void> loadChapter(Chapter chapter, {bool append = false}) async {
-    final pages =
-        await PagesService.fetchChapterPages(chapter.id).timeout(
-      const Duration(seconds: 8),
-    );
+    final pages = await PagesService.fetchChapterPages(
+      chapter.id,
+    ).timeout(const Duration(seconds: 8));
 
     final List<ReaderItem> newItems = [];
 
@@ -118,68 +116,59 @@ class _ReaderPageState extends State<ReaderPage> {
     final String titleLabel = isFirstChapter ? "First Chapter:" : "Finished:";
 
     return readingOrient == true
-      ? Container(
-          color: Colors.black,
-          height: MediaQuery.of(context).size.height,
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(titleLabel,
-                  style: const TextStyle(color: Colors.grey)),
-              const SizedBox(height: 8),
-              Text(
-                current,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+        ? Container(
+            color: Colors.black,
+            height: MediaQuery.of(context).size.height,
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(titleLabel, style: const TextStyle(color: Colors.grey)),
+                const SizedBox(height: 8),
+                Text(
+                  current,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 25),
-              Text(
-                isNoNext
-                    ? "No Next Chapters"
-                    : "Swipe for Next Chapter ->",
-                style: const TextStyle(color: Colors.grey),
-              ),
-            ],
-          ),
-        )
-      : Container(
-          color: Colors.black,
-          height: MediaQuery.of(context).size.height,
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(titleLabel,
-                  style: const TextStyle(color: Colors.grey)),
-              const SizedBox(height: 8),
-              Text(
-                current,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                const SizedBox(height: 25),
+                Text(
+                  isNoNext ? "No Next Chapters" : "Swipe for Next Chapter ->",
+                  style: const TextStyle(color: Colors.grey),
                 ),
-              ),
-              const SizedBox(height: 25),
-              Text(
-                isNoNext
-                    ? "No Next Chapters"
-                    : "Swipe for Next Chapter ^",
-                style: const TextStyle(color: Colors.grey),
-              ),
-            ],
-          ),
-        );
+              ],
+            ),
+          )
+        : Container(
+            color: Colors.black,
+            height: MediaQuery.of(context).size.height,
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(titleLabel, style: const TextStyle(color: Colors.grey)),
+                const SizedBox(height: 8),
+                Text(
+                  current,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 25),
+                Text(
+                  isNoNext ? "No Next Chapters" : "Swipe for Next Chapter ^",
+                  style: const TextStyle(color: Colors.grey),
+                ),
+              ],
+            ),
+          );
   }
-  
 
-
-
-    void preLoadImage(int index) {
+  void preLoadImage(int index) {
     for (int i = 1; i <= 3; i++) {
       final backIndex = index - i;
       if (backIndex >= 0 && backIndex < allItems.length) {
@@ -189,7 +178,6 @@ class _ReaderPageState extends State<ReaderPage> {
         }
       }
     }
-
 
     for (int i = 1; i <= 3; i++) {
       final forwardIndex = index + i;
@@ -202,23 +190,22 @@ class _ReaderPageState extends State<ReaderPage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-
-
     if (isLoading) {
       return const Scaffold(
         backgroundColor: Colors.black,
         body: Center(
-          child: CircularProgressIndicator(color: Color.fromARGB(255, 74, 14, 14)),
+          child: CircularProgressIndicator(
+            color: Color.fromARGB(255, 74, 14, 14),
+          ),
         ),
       );
     }
 
     return Scaffold(
       backgroundColor: Colors.black,
-        appBar: AppBar(
+      appBar: AppBar(
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.white,
         actions: [
@@ -227,204 +214,194 @@ class _ReaderPageState extends State<ReaderPage> {
             child: GestureDetector(
               onTap: () {
                 showDialog(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                          backgroundColor: Colors.grey.shade900,
-                          title: const Text(
-                            'Reading Direction',
-                            style: TextStyle(
+                  context: context,
+                  builder: (_) => AlertDialog(
+                    backgroundColor: Colors.grey.shade900,
+                    title: const Text(
+                      'Reading Direction',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontFamily: 'Montserrat',
+                      ),
+                    ),
+                    actions: [
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                readingOrient = false;
+                                Navigator.pop(context);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text('Reading Direction: Vertical ^'),
+                                      ],
+                                    ),
+                                    behavior: SnackBarBehavior.floating,
+                                    backgroundColor: Colors.black12,
+                                    duration: Duration(seconds: 1),
+                                  ),
+                                );
+                              });
+                            },
+                            child: Text(
+                              "Vertical",
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                color: readingOrient == false
+                                    ? Colors.red
+                                    : Colors.white,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 22,
-                                fontFamily: 'Montserrat'),
+                              ),
+                            ),
                           ),
-                          actions: [
-                            Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      readingOrient = false;
-                                      Navigator.pop(context);
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                        content: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text('Reading Direction: Vertical ^'),
-                                          ],
+                          const SizedBox(width: 20),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                readingOrient = true;
+                                Navigator.pop(context);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Reading Direction: Horizontal ->',
                                         ),
-                                        behavior: SnackBarBehavior.floating,
-                                        backgroundColor: Colors.black12,
-                                        duration: Duration(seconds: 1),
-                                      ));
-                                    });
-                                  },
-                                  child: Text(
-                                    "Vertical",
-                                    style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      color: readingOrient == false
-                                          ? Colors.red
-                                          : Colors.white,
-                                      fontWeight: FontWeight.bold,
+                                      ],
                                     ),
+                                    behavior: SnackBarBehavior.floating,
+                                    backgroundColor: Colors.black12,
+                                    duration: Duration(seconds: 1),
                                   ),
-                                ),
-                                const SizedBox(width: 20),
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      readingOrient = true;
-                                      Navigator.pop(context);
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                        content: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text('Reading Direction: Horizontal ->'),
-                                          ],
-                                        ),
-                                        behavior: SnackBarBehavior.floating,
-                                        backgroundColor: Colors.black12,
-                                        duration: Duration(seconds: 1),
-                                      ));
-                                    });
-                                  },
-                                  child: Text(
-                                    "Horizontal",
-                                    style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      color: readingOrient == true
-                                          ? Colors.red
-                                          : Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
-                        ));
+                                );
+                              });
+                            },
+                            child: Text(
+                              "Horizontal",
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                color: readingOrient == true
+                                    ? Colors.red
+                                    : Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
               },
               child: Icon(Icons.settings, color: Colors.white),
             ),
-          )
+          ),
         ],
       ),
       body: readingOrient
           ? PhotoViewGallery.builder(
-            
               pageController: _pageController,
               reverse: true,
               itemCount: allItems.length,
-              
-                     
+
               onPageChanged: (index) async {
+                preLoadImage(index);
 
-          
-                     
-              
-                    preLoadImage(index);
-                 
-                    setState(() => currentIndex = index);
-                    
+                setState(() => currentIndex = index);
 
-               
-               
-                    final item = allItems[index];
-                   
-               
-                    if (item.isBreak &&
-                        item.nextTitle != "No Next Chapters" &&
-                        !isFetchingNextChapter) {
-                      isFetchingNextChapter = true;
-               
-                      if (currentChapterIndex + 1 < widget.chapterList.length) {
-                        currentChapterIndex++;
-                        final nextChapter = widget.chapterList[currentChapterIndex];
-                     
-                        await loadChapter(nextChapter, append: true);
-               
-                        if (mounted) setState(() {});
-                      }
-               
-                      isFetchingNextChapter = false;
-                    }
-                  },
+                final item = allItems[index];
+
+                if (item.isBreak &&
+                    item.nextTitle != "No Next Chapters" &&
+                    !isFetchingNextChapter) {
+                  isFetchingNextChapter = true;
+
+                  if (currentChapterIndex + 1 < widget.chapterList.length) {
+                    currentChapterIndex++;
+                    final nextChapter = widget.chapterList[currentChapterIndex];
+
+                    await loadChapter(nextChapter, append: true);
+
+                    if (mounted) setState(() {});
+                  }
+
+                  isFetchingNextChapter = false;
+                }
+              },
 
               builder: (context, index) {
                 final item = allItems[index];
                 if (item.isBreak) {
                   return PhotoViewGalleryPageOptions.customChild(
-                    
-                    child: _buildBreakScreen(item.currentTitle!, item.nextTitle!),
+                    child: _buildBreakScreen(
+                      item.currentTitle!,
+                      item.nextTitle!,
+                    ),
                   );
                 }
                 return PhotoViewGalleryPageOptions(
-                  
                   imageProvider: NetworkImage(item.imagePath!),
-                  
+
                   minScale: PhotoViewComputedScale.contained,
                   maxScale: PhotoViewComputedScale.covered * 3,
-                  
+
                   heroAttributes: PhotoViewHeroAttributes(tag: item.imagePath!),
                 );
               },
               scrollPhysics: const BouncingScrollPhysics(),
-              
+
               backgroundDecoration: const BoxDecoration(color: Colors.black),
-              
             )
           : PhotoViewGallery.builder(
               pageController: _pageController,
               scrollDirection: Axis.vertical,
-          
-              itemCount: allItems.length,
-                 onPageChanged: (index) async {
-                 preLoadImage(index);
-                setState(() => currentIndex = index);
 
+              itemCount: allItems.length,
+              onPageChanged: (index) async {
+                preLoadImage(index);
+                setState(() => currentIndex = index);
 
                 final item = allItems[index];
 
- 
-                    if (item.isBreak &&
-                       item.nextTitle != "No Next Chapters" &&
-                       !isFetchingNextChapter) {
-                       isFetchingNextChapter = true;
+                if (item.isBreak &&
+                    item.nextTitle != "No Next Chapters" &&
+                    !isFetchingNextChapter) {
+                  isFetchingNextChapter = true;
 
+                  if (currentChapterIndex + 1 < widget.chapterList.length) {
+                    currentChapterIndex++;
+                    final nextChapter = widget.chapterList[currentChapterIndex];
+                    await loadChapter(nextChapter, append: true);
 
-                      if (currentChapterIndex + 1 < widget.chapterList.length) {
-                      currentChapterIndex++;
-                      final nextChapter = widget.chapterList[currentChapterIndex];
-                        await loadChapter(nextChapter, append: true);
+                    if (mounted) setState(() {});
+                  }
 
-
-                        if (mounted) setState(() {});
-                        }
-
-
-                         isFetchingNextChapter = false;
-                          }
-                            },
-
+                  isFetchingNextChapter = false;
+                }
+              },
 
               builder: (context, index) {
                 final item = allItems[index];
                 if (item.isBreak) {
                   return PhotoViewGalleryPageOptions.customChild(
-                    
-                    child: _buildBreakScreen(item.currentTitle!, item.nextTitle!),
+                    child: _buildBreakScreen(
+                      item.currentTitle!,
+                      item.nextTitle!,
+                    ),
                   );
                 }
                 return PhotoViewGalleryPageOptions(
-                  
-                  
                   imageProvider: NetworkImage(item.imagePath!),
-                  
+
                   minScale: PhotoViewComputedScale.contained,
                   maxScale: PhotoViewComputedScale.covered * 3,
                   heroAttributes: PhotoViewHeroAttributes(tag: item.imagePath!),
@@ -432,7 +409,7 @@ class _ReaderPageState extends State<ReaderPage> {
               },
               scrollPhysics: const BouncingScrollPhysics(),
               backgroundDecoration: const BoxDecoration(color: Colors.black),
-            )
+            ),
     );
   }
 }

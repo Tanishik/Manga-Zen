@@ -22,6 +22,3 @@ Future<List<Chapter>> fetchChapters(String mangaId) async {
     );
   }).toList();
 }
-
-
-

@@ -10,20 +10,18 @@ class BackgroundImage extends StatelessWidget {
         return LinearGradient(
           begin: Alignment.bottomCenter,
           end: Alignment.center,
-         
-          colors: [
-             Colors.black,
-             Colors.black54
-          ]
+
+          colors: [Colors.black, Colors.black54],
         ).createShader(bounds);
       },
       blendMode: BlendMode.darken,
       child: Container(
-        
         decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage('assets/images/Intro Page.png'),
-          fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(Colors.black54,BlendMode.darken ))
+          image: DecorationImage(
+            image: AssetImage('assets/images/Intro Page.png'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(Colors.black54, BlendMode.darken),
+          ),
         ),
       ),
     );
