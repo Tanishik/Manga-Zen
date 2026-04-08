@@ -160,12 +160,23 @@ class _SearchPageState extends State<SearchPage> {
           Expanded(
             child: filteredMangas.isEmpty
                 ? const Center(
-                    child: Text(
-                      'No results',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'ఠ _ ఠ',
+                          style: TextStyle(color: Colors.grey, fontSize: 27),
+                        ),
+                        SizedBox(height: 2),
+                        Text(
+                          'No Match found.',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: Colors.grey,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
                     ),
                   )
                 : RefreshIndicator(
