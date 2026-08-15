@@ -1,4 +1,4 @@
-# manga_zen
+<img width="6016" height="6016" alt="Apple-macOS-13-wallpaper-Dark-Mode" src="https://github.com/user-attachments/assets/3871222f-29d8-4dcb-9ea4-61dcd620fa50" /># manga_zen
 
 
 
