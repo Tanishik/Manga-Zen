@@ -127,12 +127,22 @@ class _MangaDetailsState extends State<MangaDetails> {
                             width: 120,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(12),
-                              child: FadeInImage.assetNetwork(
-                                placeholder: 'assets/Placeholder.png',
-                                image: widget.mangaId.image,
-                                fit: BoxFit.cover,
-                                fadeInDuration: Duration(milliseconds: 300),
-                              ),
+                              child:  FadeInImage(
+                  placeholder: AssetImage('assets/Placeholder.png'),
+                  image: NetworkImage(
+                    headers: const{
+                   'User-Agent':'MangaZenApp/1.0.0',
+                    },
+                    widget.mangaId.image),
+                  fit: BoxFit.cover,
+                  fadeInDuration: Duration(milliseconds: 300),
+
+                  imageErrorBuilder: (context, error, stackTrace) {
+                    return Image.asset('assets/Placeholder.png',
+                    fit: BoxFit.cover,);
+                  },
+                  
+                ),
                             ),
                           ),
                         ),
@@ -270,26 +280,7 @@ class _MangaDetailsState extends State<MangaDetails> {
                         ),
                       ],
                     ),
-                    Column(
-                      children: [
-                        IconButton(
-                          icon: const Icon(
-                            Icons.web,
-                            color: Colors.white54,
-                            size: 25,
-                          ),
-                          onPressed: () {},
-                        ),
-                        const Text(
-                          'WebView',
-                          style: TextStyle(
-                            color: Colors.white54,
-                            fontSize: 14,
-                            fontFamily: 'Montserrat',
-                          ),
-                        ),
-                      ],
-                    ),
+                  
                   ],
                 ),
 

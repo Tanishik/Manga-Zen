@@ -30,11 +30,21 @@ class TopMangasTile extends StatelessWidget {
               height: isLandscape ? 800 : 280,
               child: AspectRatio(
                 aspectRatio: 9 / 14,
-                child: FadeInImage.assetNetwork(
-                  placeholder: 'assets/Placeholder.png',
-                  image: firstManga.image,
+                child: FadeInImage(
+                  placeholder: AssetImage('assets/Placeholder.png'),
+                  image: NetworkImage(
+                    headers: const{
+                   'User-Agent':'MangaZenApp/1.0.0',
+                    },
+                    firstManga.image),
                   fit: BoxFit.cover,
                   fadeInDuration: Duration(milliseconds: 300),
+
+                  imageErrorBuilder: (context, error, stackTrace) {
+                    return Image.asset('assets/Placeholder.png',
+                    fit: BoxFit.cover,);
+                  },
+                  
                 ),
               ),
             ),

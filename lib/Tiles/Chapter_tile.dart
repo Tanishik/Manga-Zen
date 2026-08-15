@@ -61,10 +61,7 @@ class _ChapterTileState extends State<ChapterTile> {
                 ],
               ),
             ),
-            const Icon(
-              Icons.download_for_offline_outlined,
-              color: Colors.white70,
-            ),
+           
           ],
         ),
       ),

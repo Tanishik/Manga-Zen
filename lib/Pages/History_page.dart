@@ -125,23 +125,26 @@ class _HistoryPageState extends State<HistoryPage> {
         ),
 
         actions: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              elevation: 0,
-
-              backgroundColor: Colors.grey.shade900,
-              foregroundColor: Colors.red.shade900,
-              disabledForegroundColor: Colors.grey,
-              disabledBackgroundColor: Colors.grey.shade900,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+            
+                backgroundColor: Colors.grey.shade900,
+                foregroundColor: Colors.red.shade900,
+                disabledForegroundColor: Colors.grey,
+                disabledBackgroundColor: Colors.grey.shade900,
+              ),
+            
+              onPressed: historyMangas.isEmpty
+                  ? null
+                  : () {
+                      _showdialog();
+                    },
+            
+              child: Icon(Icons.delete_outline, size: 25),
             ),
-
-            onPressed: historyMangas.isEmpty
-                ? null
-                : () {
-                    _showdialog();
-                  },
-
-            child: Icon(Icons.delete_outline, size: 25),
           ),
         ],
       ),

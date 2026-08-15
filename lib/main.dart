@@ -16,6 +16,8 @@ void main() async {
   await Hive.openBox('Profile');
   await Hive.openBox('readingProgress');
 
+  
+
   runApp(
     const MyApp()
 );

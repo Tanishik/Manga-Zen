@@ -15,6 +15,7 @@ class CustomizationPage extends StatefulWidget {
 class _CustomizationPageState extends State<CustomizationPage> {
   List<Manga> mangaList = [];
   bool isLoading = true;
+  bool hasError = false;
 
   List<Manga> selectedMangas = [];
   final box = Hive.box('favorites');
@@ -25,18 +26,80 @@ class _CustomizationPageState extends State<CustomizationPage> {
     LoadManga();
   }
 
-  Future<void> LoadManga() async {
+   Future<void> LoadManga() async {
+
+    setState(() {
+      isLoading = true;
+      hasError = false;
+    });
+
+  try {
     final manga = await Top50MangaService.fetchManga();
+   setState(() {
+     isLoading = false;
+   });
+
+    if (!mounted) return;
 
     setState(() {
       mangaList = manga;
+    });
+  } catch (e) {
+    if (!mounted) return;
+    setState(() {
       isLoading = false;
+      hasError = true;
     });
   }
+}
 
   @override
   Widget build(BuildContext context) {
     Hive.box('app').put('onboardingdone', true);
+
+     if (hasError) {
+      return Scaffold(
+    backgroundColor:  Color.fromARGB(255, 21, 21, 21),
+    body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.wifi_off_rounded, size: 64, color: Colors.white54),
+          const SizedBox(height: 16),
+          const Text(
+            "No Internet Connection",
+            style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            "Please check your network and try again.",
+            style: TextStyle(color: Colors.white54, fontSize: 14),
+          ),
+          const SizedBox(height: 15),
+
+
+          GestureDetector(
+            onTap: () => LoadManga(),
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 185, 2, 2),
+                borderRadius: BorderRadius.circular(12)
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Retry",
+                style: TextStyle(
+                  color: Colors.white
+                ),),
+              )),
+          ),
+            
+          
+        ],
+      ),
+    ),
+  );
+    } 
 
     if (isLoading) {
       return const Center(
@@ -121,13 +184,12 @@ class _CustomizationPageState extends State<CustomizationPage> {
                         if (box.containsKey(manga.id)) {
                           box.delete(manga.id);
                         } else {
-                          box.put(manga.id, {
+                         
                             box.put(manga.id, {
                               "id": manga.id,
                               "title": manga.title,
                               "image": manga.image,
-                            }),
-                          });
+                            });
                         }
                       });
                     },
@@ -151,7 +213,7 @@ class _CustomizationPageState extends State<CustomizationPage> {
                             backgroundColor: Colors.grey.shade900,
                             disabledBackgroundColor: Colors.grey.shade900,
                             foregroundColor: Colors.grey.shade400,
-                            disabledForegroundColor: Colors.grey.shade600,
+                            disabledForegroundColor: Colors.grey.shade700,
                           ),
 
                           onPressed: box.isEmpty
@@ -180,6 +242,12 @@ class _CustomizationPageState extends State<CustomizationPage> {
                   const SizedBox(height: 10),
                   GestureDetector(
                     onTap: () {
+
+                      setState(() {
+                        box.clear();
+                      });
+
+
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

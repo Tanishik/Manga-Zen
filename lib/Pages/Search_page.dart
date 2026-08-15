@@ -21,6 +21,7 @@ class _SearchPageState extends State<SearchPage> {
   List<Manga> topMangas = [];
   List<Manga> filteredMangas = [];
   bool isLoading = true;
+  bool hasError = false;
   bool isSearching = false;
   final PageController _controller = PageController();
   int _currentpage = 0;
@@ -43,12 +44,17 @@ class _SearchPageState extends State<SearchPage> {
       } else {
         _currentpage = 0;
       }
-      _controller.animateToPage(
+      
+      if(_controller.hasClients){
+        _controller.animateToPage(
         _currentpage,
         duration: Duration(milliseconds: 500),
         curve: Curves.easeInOut,
       );
-    });
+      }
+     
+    }
+    );
   }
 
   Future<void> _refreshPage() async {
@@ -64,6 +70,13 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Future<void> loadMangas() async {
+
+    setState(() {
+      isLoading = true;
+      hasError = false;
+    });
+
+  try {
     final manga = await MangaService.fetchManga();
     final manga2 = await Top3MangaService.fetchManga();
 
@@ -75,7 +88,14 @@ class _SearchPageState extends State<SearchPage> {
       filteredMangas = manga;
       isLoading = false;
     });
+  } catch (e) {
+    if (!mounted) return;
+    setState(() {
+      isLoading = false;
+      hasError = true;
+    });
   }
+}
 
   @override
   void dispose() {
@@ -90,8 +110,9 @@ class _SearchPageState extends State<SearchPage> {
     final isLandsape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
-    if (isLoading) {
-      return const Scaffold(
+        if(isLoading)
+     {
+      return Scaffold(
         backgroundColor: Color.fromARGB(255, 21, 21, 21),
         body: Center(
           child: CircularProgressIndicator(
@@ -100,6 +121,52 @@ class _SearchPageState extends State<SearchPage> {
         ),
       );
     }
+
+    if (hasError) {
+      return Scaffold(
+    backgroundColor:  Color.fromARGB(255, 21, 21, 21),
+    body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.wifi_off_rounded, size: 64, color: Colors.white54),
+          const SizedBox(height: 16),
+          const Text(
+            "No Internet Connection",
+            style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            "Please check your network and try again.",
+            style: TextStyle(color: Colors.white54, fontSize: 14),
+          ),
+          const SizedBox(height: 15),
+
+
+          GestureDetector(
+            onTap: () => loadMangas(),
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 185, 2, 2),
+                borderRadius: BorderRadius.circular(12)
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Retry",
+                style: TextStyle(
+                  color: Colors.white
+                ),),
+              )),
+          ),
+            
+          
+        ],
+      ),
+    ),
+  );
+    } 
+
+    
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 21, 21, 21),
@@ -158,7 +225,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
 
           Expanded(
-            child: filteredMangas.isEmpty
+            child: filteredMangas.isEmpty && isLoading == false
                 ? const Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,

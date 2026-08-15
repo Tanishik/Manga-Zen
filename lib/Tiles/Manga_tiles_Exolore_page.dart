@@ -22,12 +22,22 @@ class MangaTiles2 extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         child: AspectRatio(
                           aspectRatio: 9 / 14,
-                          child: FadeInImage.assetNetwork(
-                            placeholder: 'assets/Placeholder.png',
-                            image: manga.image,
-                            fit: BoxFit.cover,
-                            fadeInDuration: Duration(milliseconds: 300),
-                          ),
+                          child:  FadeInImage(
+                  placeholder: AssetImage('assets/Placeholder.png'),
+                  image: NetworkImage(
+                    headers: const{
+                   'User-Agent':'MangaZenApp/1.0.0',
+                    },
+                    manga.image),
+                  fit: BoxFit.cover,
+                  fadeInDuration: Duration(milliseconds: 300),
+
+                  imageErrorBuilder: (context, error, stackTrace) {
+                    return Image.asset('assets/Placeholder.png',
+                    fit: BoxFit.cover,);
+                  },
+                  
+                ),
                         ),
                       ),
                     ],
