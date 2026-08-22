@@ -12,5 +12,5 @@ ________
 
 
 
+<img width="3840" height="2160" alt="Manga-zen banner" src="https://github.com/user-attachments/assets/d1d6cc48-f351-4ac2-89d8-5d414dda4764" />
 
-<img width="2560" height="1440" alt="Banner" src="https://github.com/user-attachments/assets/f5eefc0f-dafb-4f44-9a4e-aba144fbdc7f" />
