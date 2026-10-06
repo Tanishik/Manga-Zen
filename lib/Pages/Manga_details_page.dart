@@ -32,10 +32,10 @@ class _MangaDetailsState extends State<MangaDetails> {
   }
 
   Future<void> loadChapters() async {
-    print('fetch Start');
+   
     final result = await fetchChapters(widget.mangaId.id);
 
-    print('fetched');
+   
 
     setState(() {
       chapters = result;
@@ -306,14 +306,14 @@ class _MangaDetailsState extends State<MangaDetails> {
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          final _chapter = chapters[index];
+                          final chapter = chapters[index];
 
                           print('Manga Details page');
 
                           return GestureDetector(
                             onTap: () {
                               setState(() {
-                                readBox.put(_chapter.id, _chapter.id);
+                                readBox.put(chapter.id, chapter.id);
                               });
 
                               Navigator.push(
@@ -330,7 +330,7 @@ class _MangaDetailsState extends State<MangaDetails> {
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
-                              child: ChapterTile(chapter: _chapter),
+                              child: ChapterTile(chapter: chapter),
                             ),
                           );
                         },

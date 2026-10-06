@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:manga_zen/Manga/Manga.dart';
 import 'package:manga_zen/Pages/History_page.dart';
 import 'package:manga_zen/Pages/Library_page.dart';
@@ -6,7 +7,7 @@ import 'package:manga_zen/Pages/Search_page.dart';
 import 'package:manga_zen/Services/manga_api.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -41,30 +42,72 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _pages = [LibraryPage(), SearchPage(), HistoryPage()];
+    final List<Widget> pages = [LibraryPage(), SearchPage(), HistoryPage()];
 
     return Scaffold(
+      extendBody: true,
       backgroundColor: Colors.black,
 
-      body: _pages[_SelectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: navigateBottomBar,
-        currentIndex: _SelectedIndex,
-        selectedItemColor: const Color.fromARGB(255, 185, 2, 2),
-        unselectedItemColor: Colors.grey.shade600,
-        backgroundColor: Colors.grey.shade900,
+      body: IndexedStack(
+        index: _SelectedIndex,
+        children: pages,
 
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.book), label: "Library"),
+      ),
 
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search_outlined),
-            label: "Discover",
+
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(35),
+            color: Colors.grey.shade900
           ),
 
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: "History"),
-        ],
-      ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+
+            child: GNav(
+              
+              padding: EdgeInsetsGeometry.symmetric(
+                horizontal: 25,
+                vertical: 20
+              ),
+              tabBackgroundColor: Colors.grey.shade800,
+              tabs: [
+                GButton(
+                icon: Icons.book,
+                text: "Library",
+                iconColor: Colors.grey.shade600,
+                  iconActiveColor: const Color.fromARGB(255, 184, 2, 2),
+                  textColor: const Color.fromARGB(255, 184, 2, 2),
+                ),
+            
+                 GButton(
+                  icon: Icons.search_outlined,
+                  text: "Discover",
+                  iconColor: Colors.grey.shade600,
+                  iconActiveColor: const Color.fromARGB(255, 184, 2, 2),
+                  textColor: const Color.fromARGB(255, 184, 2, 2),),
+            
+                  GButton(
+                  icon: Icons.history,
+                  text: "History",
+                  iconColor: Colors.grey.shade600,
+                    iconActiveColor: const Color.fromARGB(255, 184, 2, 2),
+                  textColor: const Color.fromARGB(255, 184, 2, 2),
+                  )
+            
+              ],
+              selectedIndex: _SelectedIndex,
+              onTabChange: (value) {
+                setState(() {
+                  _SelectedIndex = value;
+                });
+              },
+              ),
+          ),
+        ),
+      )
     );
   }
 }

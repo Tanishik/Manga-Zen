@@ -3,7 +3,7 @@ import 'package:manga_zen/Manga/Manga.dart';
 
 class HistoryTile extends StatefulWidget {
   final Manga manga;
-  HistoryTile({super.key, required this.manga});
+  const HistoryTile({super.key, required this.manga});
 
   @override
   State<HistoryTile> createState() => _HistoryTileState();

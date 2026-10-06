@@ -31,7 +31,7 @@ class _HistoryPageState extends State<HistoryPage> {
       );
     }).toList();
 
-    void _showdialog() {
+    void showdialog() {
       showDialog(
         context: context,
         builder: (context) {
@@ -140,7 +140,7 @@ class _HistoryPageState extends State<HistoryPage> {
               onPressed: historyMangas.isEmpty
                   ? null
                   : () {
-                      _showdialog();
+                      showdialog();
                     },
             
               child: Icon(Icons.delete_outline, size: 25),

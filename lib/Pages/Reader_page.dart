@@ -333,11 +333,9 @@ class _ReaderPageState extends State<ReaderPage> {
 
                     if (mounted) setState(() {});
                   }
-
                   isFetchingNextChapter = false;
                 }
               },
-
               builder: (context, index) {
                 final item = allItems[index];
                 if (item.isBreak) {
@@ -350,15 +348,12 @@ class _ReaderPageState extends State<ReaderPage> {
                 }
                 return PhotoViewGalleryPageOptions(
                   imageProvider: NetworkImage(item.imagePath!),
-
                   minScale: PhotoViewComputedScale.contained,
                   maxScale: PhotoViewComputedScale.covered * 3,
-
                   heroAttributes: PhotoViewHeroAttributes(tag: item.imagePath!),
                 );
               },
               scrollPhysics: const BouncingScrollPhysics(),
-
               backgroundDecoration: const BoxDecoration(color: Colors.black),
             )
           : PhotoViewGallery.builder(
