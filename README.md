@@ -6,6 +6,9 @@ Note!
 
 This project is built for educational purposes. Due to API licensing and content restrictions, it is not intended for production release.
 
+<img width="1635" height="2118" alt="Untitled94" src="https://github.com/user-attachments/assets/17cf4089-4b8b-49ba-8c23-51ca7dd372e8" />
+
+
 
 ________
 
